@@ -1,8 +1,5 @@
 "use strict";
 
-let userEmail = "";
-let userPassword = "";
-
 let xEmail = "";
 let xPassword = "";
 
@@ -17,20 +14,65 @@ fetch("data.json")
 
     xEmail = btoa(email);
     xPassword = btoa(password);
-
-
-    console.log(xEmail);
-    console.log(xPassword);
 });
 
 
 function myFunction() {
     let userEmail = document.getElementById("email").value;
-    console.log(userEmail);
+    let userPassword = document.getElementById("Password").value;
+    let newEmail = atob(xEmail);
+    let newPassword = atob(xPassword);
 
-    let userPassword = document.getElementById("Password");
-    console.log(userPassword);
+    if(userEmail == newEmail && userPassword == newPassword)
+    {
+        window.sessionStorage.setItem('userEmail', userEmail);
+        replace();
+    }
+    else{
+        alert("Wrong email or password.");
+    }
+    xEmail = btoa(email);
+    xPassword = btoa(password);
 
-
-    
   }
+
+
+  function replace() {
+    window.open("data.html");
+  }
+
+  function checkFunction()
+  {
+    let keyValue = sessionStorage.getItem("userEmail");
+    if(keyValue == "" || keyValue == null){
+        window.close();
+    }
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	theme: "light2",
+	title: {
+		text: "Afghanistan start of Covid-19 grapth"
+	},
+	axisY: {
+		title: "Change over time",
+	
+	},
+	axisX: {
+		title: "Criteria"
+	},
+	data: [{
+		type: "column",
+		yValueFormatString: "#,##0.0#\"%\"",
+		dataPoints: [
+			{ label: "handwashing_facilities", y:37.746 },	
+			{ label: "Population Density", y: 54.422 },	
+      { label: "life expectensy", y: 64.83},
+			{ label: "new Cases", y: 39.857},			
+		]
+	}]
+});
+chart.render();
+
+}
+
